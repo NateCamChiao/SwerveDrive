@@ -17,8 +17,19 @@ public final class Constants {
     public record SwerveConstants(int kDriveMotorID, int kAngleMotorID, int kCancoderID){}
 
     public static final class Swerve{
-        public static final double wheelBase = 0;
-        public static final double trackWidth = 0;
+        //distance from center of wheel to center of wheel (long side of car)
+        public static final double wheelBase = Units.inchesToMeters(19.25);
+        //distance from middle of tire to middle of other tire (width of car)
+        public static final double trackWidth = Units.inchesToMeters(19);
+        //used to define kinematics (optional)
+        public static final double halfWheelBase = wheelBase / 2;
+        public static final double halfTrackWidth = trackWidth / 2;
+        public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
+            new Translation2d(halfWheelBase, halfTrackWidth),
+            new Translation2d(halfWheelBase, -halfTrackWidth),
+            new Translation2d(-halfWheelBase, halfTrackWidth),
+            new Translation2d(-halfWheelBase, -halfTrackWidth)
+        );
         public static final class FLModule{
             public static final int kDriveID = 0;
             public static final int kTurnID = 0;
