@@ -1,0 +1,35 @@
+package frc.robot.commands;
+import static frc.robot.Constants.Joystick.*;
+import frc.robot.subsystems.Swerve;
+
+import java.util.function.DoubleSupplier;
+
+import com.ctre.phoenix6.Utils;
+
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj2.command.Command;
+
+
+
+public class DriveCommand extends Command{
+    private Swerve s_swerveBase;
+    private DoubleSupplier m_translationSup, m_strafeSup, m_rotationSup;
+    private boolean isRobotCentric;
+
+    public DriveCommand(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, boolean isRobotCentric){
+        this.s_swerveBase = swerve;
+        this.m_translationSup = translationSup;
+        this.m_strafeSup = strafeSup;
+        this.m_rotationSup = rotationSup;
+        this.isRobotCentric = isRobotCentric;
+        addRequirements(swerve);
+    }
+
+    public void execute(){
+        double translation = MathUtil.applyDeadband(this.m_translationSup.getAsDouble(), kStickDeadband);
+        double strafe = MathUtil.applyDeadband(this.m_strafeSup.getAsDouble(), kStickDeadband);
+        double rotation = MathUtil.applyDeadband(this.m_rotationSup.getAsDouble(), kStickDeadband);
+
+        
+    }
+}
