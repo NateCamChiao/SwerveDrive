@@ -19,6 +19,8 @@ public final class Constants {
     public record SwerveConstants(int kDriveMotorID, int kAngleMotorID, int kCancoderID){}
 
     public static final class Swerve{
+        public static final 
+        public static final double wheelCircumference = 
         //distance from center of wheel to center of wheel (long side of car)
         public static final double wheelBase = Units.inchesToMeters(19.25);
         //distance from middle of tire to middle of other tire (width of car)
