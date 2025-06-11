@@ -4,6 +4,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.SwerveModule;
+import frc.robot.utils.COTSFalconSwerveConstants;
 
 public final class Constants {
     public static final class Joystick{
@@ -19,15 +20,15 @@ public final class Constants {
     public record SwerveConstants(int kDriveMotorID, int kAngleMotorID, int kCancoderID){}
 
     public static final class Swerve{
-        public static final 
-        public static final double wheelCircumference = 
+        public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
+        public static final double wheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)
-        public static final double wheelBase = Units.inchesToMeters(19.25);
+        public static final double kWheelBase = Units.inchesToMeters(19.25);
         //distance from middle of tire to middle of other tire (width of car)
-        public static final double trackWidth = Units.inchesToMeters(19);
+        public static final double kTrackWidth = Units.inchesToMeters(19);
         //used to define kinematics (optional)
-        public static final double halfWheelBase = wheelBase / 2;
-        public static final double halfTrackWidth = trackWidth / 2;
+        public static final double halfWheelBase = kWheelBase / 2;
+        public static final double halfTrackWidth = kTrackWidth / 2;
         public static final SwerveDriveKinematics kSwerveKinematics = new SwerveDriveKinematics(
             new Translation2d(halfWheelBase, halfTrackWidth),
             new Translation2d(halfWheelBase, -halfTrackWidth),
