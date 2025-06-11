@@ -15,7 +15,8 @@ public class RobotContainer {
 
     private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
-    private SendableChooser<Command> sendableChooser = new SendableChooser<Command>();
+    private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    private SendableChooser<Double> robotSpeedChooser = new SendableChooser<Double>();
 
     public RobotContainer(){
         configureAutoOptions();
@@ -24,9 +25,15 @@ public class RobotContainer {
     }
 
     public void configureAutoOptions(){
-        sendableChooser.setDefaultOption("Default Auto", new InstantCommand());
-        sendableChooser.addOption("auto1", new InstantCommand());
-        SmartDashboard.putData(sendableChooser);
+        autoChooser.setDefaultOption("Default Auto", new InstantCommand());
+        autoChooser.addOption("auto1", new InstantCommand());
+        SmartDashboard.putData(autoChooser);
+
+        robotSpeedChooser.setDefaultOption("100%", Double.valueOf(1.0));
+        robotSpeedChooser.addOption("75%", 0.75);
+        robotSpeedChooser.addOption("50%", 0.5);
+        robotSpeedChooser.addOption("25%", 0.25);
+        SmartDashboard.putData(robotSpeedChooser);
     }
 
     public void configureBindings(){
@@ -34,6 +41,6 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        return sendableChooser.getSelected();
+        return autoChooser.getSelected();
     }
 }
