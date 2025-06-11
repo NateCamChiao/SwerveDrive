@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import frc.robot.Constants;
 
@@ -15,10 +16,19 @@ public class SwerveModule {
         m_angleEncoder = new CANcoder(moduleIDConstants.kCancoderID());
     }
 
+    public void resetToAbsolute(){
+        
+    }
+
     public SwerveModulePosition getModulePosition(){
         return new SwerveModulePosition(
-            m_driveMotor.getPosition().getValueAsDouble() / 
+            getDriveDistMeters(),
+            getAngle()
         );
+    }
+
+    public Rotation2d getAngle(){
+        return Rotation2d.fromRotations(m_angleMotor.getPosition().getValueAsDouble());
     }
 
     public double getDriveDistMeters(){

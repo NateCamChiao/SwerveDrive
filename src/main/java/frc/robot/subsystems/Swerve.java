@@ -56,4 +56,10 @@ public class Swerve extends SubsystemBase{
         return Rotation2d.fromDegrees(360 - m_gryo.getAngle());
     }
 
+    public void alignModules(){
+        for(SwerveModule mod : this.swerveModules){
+            mod.resetToAbsolute();
+        }
+    }
+
 }
