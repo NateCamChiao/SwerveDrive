@@ -8,7 +8,9 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import frc.robot.Constants;
+import frc.robot.Constants.Swerve;
+// import static frc.robot.Constants.Swerve;
+import frc.robot.Constants.SwerveConstants;
 
 public class SwerveModule {
     private TalonFX m_angleMotor, m_driveMotor;
@@ -16,12 +18,16 @@ public class SwerveModule {
     private DutyCycleOut m_driveDutyCycle;
     private PositionVoltage m_anglePositionVoltage;
 
-    public SwerveModule(Constants.SwerveConstants moduleIDConstants){
+    public SwerveModule(SwerveConstants moduleIDConstants){
         m_angleMotor = new TalonFX(moduleIDConstants.kDriveMotorID());
         m_driveMotor = new TalonFX(moduleIDConstants.kAngleMotorID());
         m_encoder = new CANcoder(moduleIDConstants.kCancoderID());
 
-        m_angleMotor.getConfigurator().apply()
+        m_angleMotor.getConfigurator().apply(Swerve.kCTREConfigs.swerveAngleFXConfig);
+        m_driveMotor.getConfigurator().apply(Swerve.kCTREConfigs.swerveDriveFXConfig);
+        m_encoder.getConfigurator().apply(Swerve.kCTREConfigs.swerveCanCoderConfig);
+        //zero drive encoder
+        m_driveMotor.getConfigurator().setPosition(0);
     }
     //sets integrated encoder to absolute position
     //eliminates need to manually align swerves
@@ -45,7 +51,7 @@ public class SwerveModule {
     }
 
     public void setDriveSpeed(double speedMetersPerSecond){
-        m_driveDutyCycle.Output = speedMetersPerSecond / Constants.Swerve.kMaxSpeedMetersPerSec;
+        m_driveDutyCycle.Output = speedMetersPerSecond / Swerve.kMaxSpeedMetersPerSec;
         m_driveMotor.setControl(m_driveDutyCycle);
     }
     //gets module positions for odometry
@@ -61,6 +67,6 @@ public class SwerveModule {
     }
 
     public double getDriveDistMeters(){
-        return m_driveMotor.getPosition().getValueAsDouble() * Constants.Swerve.wheelCircumference;
+        return m_driveMotor.getPosition().getValueAsDouble() * Swerve.wheelCircumference;
     }
 }
