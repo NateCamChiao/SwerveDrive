@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 public class Robot extends TimedRobot {
   private RobotContainer robotContainer = new RobotContainer();
   private Command m_autoCommand;
+  
 
   @Override
   public void robotPeriodic() {}
@@ -19,6 +20,7 @@ public class Robot extends TimedRobot {
       m_autoCommand.schedule();
     }
   }
+  
 
   @Override
   public void teleopInit(){

@@ -11,6 +11,7 @@ import frc.robot.subsystems.SwerveModule;
 import frc.robot.utils.COTSFalconSwerveConstants;
 
 public final class Constants {
+    public static final double periodicSpeed = Robot.kDefaultPeriod; // how quickly periodic methods are called. (millis)
     public static final class Joystick{
         public static final double kStickDeadband = 0.05;
         public static final double kSlewRateLimit = 0.05;
@@ -28,6 +29,7 @@ public final class Constants {
 
     public static final class Swerve{
         public static final double kMaxSpeedMetersPerSec = 6.14;
+        public static final double kMaxAngularVelocityRad = Math.PI;
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
         public static final double wheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)
