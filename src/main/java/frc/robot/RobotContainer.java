@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -10,6 +11,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Swerve;
 
 public class RobotContainer {
+    public static Field2d m_simField = new Field2d();
     private Swerve s_swerve = new Swerve();
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
 
@@ -30,6 +32,8 @@ public class RobotContainer {
                 false
             )
         );
+        SmartDashboard.putData(RobotContainer.m_simField);
+        SmartDashboard.putNumber("test", 0);
     }
 
     public void configureAutoOptions(){

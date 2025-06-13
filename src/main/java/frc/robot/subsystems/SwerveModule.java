@@ -8,6 +8,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants.Swerve;
 // import static frc.robot.Constants.Swerve;
 import frc.robot.Constants.SwerveConstants;
@@ -43,7 +44,8 @@ public class SwerveModule {
         setAngle(desiredState.angle);
         //takes difference between angle setpoint and current angle
         //then take cos of angle to limit speed when angle difference is large
-        setDriveSpeed(desiredState.angle.minus(getAngle()).getCos());
+        desiredState.cosineScale(getAngle());
+        setDriveSpeed(desiredState.speedMetersPerSecond);
     }
 
     public void setAngle(Rotation2d angle){
@@ -56,6 +58,7 @@ public class SwerveModule {
     }
     //gets module positions for odometry
     public SwerveModulePosition getModulePosition(){
+        SmartDashboard.putNumber("test", getDriveDistMeters());
         return new SwerveModulePosition(
             getDriveDistMeters(),
             getAngle()
@@ -69,4 +72,6 @@ public class SwerveModule {
     public double getDriveDistMeters(){
         return m_driveMotor.getPosition().getValueAsDouble() * Swerve.wheelCircumference;
     }
+
+    
 }

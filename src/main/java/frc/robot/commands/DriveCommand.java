@@ -1,5 +1,7 @@
 package frc.robot.commands;
 import static frc.robot.Constants.Joystick.*;
+
+import frc.robot.Constants;
 import frc.robot.subsystems.Swerve;
 
 import java.util.function.DoubleSupplier;
@@ -7,6 +9,7 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.Utils;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -30,6 +33,10 @@ public class DriveCommand extends Command{
         double strafe = MathUtil.applyDeadband(this.m_strafeSup.getAsDouble(), kStickDeadband);
         double rotation = MathUtil.applyDeadband(this.m_rotationSup.getAsDouble(), kStickDeadband);
 
-        
+        s_swerveBase.drive(
+            new Translation2d(translation, strafe).times(Constants.Swerve.kMaxSpeedMetersPerSec),
+            rotation * Constants.Swerve.kMaxAngularVelocityRad,
+            this.isRobotCentric
+        );
     }
 }
