@@ -21,7 +21,15 @@ public class RobotContainer {
     public RobotContainer(){
         configureAutoOptions();
         configureBindings();
-        s_swerve.setDefaultCommand(new DriveCommand(s_swerve, () -> joystick.getRawAxis(1), () -> joystick.getRawAxis(0), () -> 0.0, false));
+        s_swerve.setDefaultCommand(
+            new DriveCommand(
+                s_swerve, 
+                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kXAxis)), 
+                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kYAxis)),
+                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kRotationAxis)), 
+                false
+            )
+        );
     }
 
     public void configureAutoOptions(){
