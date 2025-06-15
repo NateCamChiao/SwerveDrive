@@ -18,12 +18,13 @@ import frc.robot.Constants.SwerveConstants;
 public class SwerveModule {
     public TalonFX m_angleMotor, m_driveMotor;
     private CANcoder m_encoder;
-    private DutyCycleOut m_driveDutyCycle;
-    private PositionVoltage m_anglePositionVoltage;
+    private DutyCycleOut m_driveDutyCycle = new DutyCycleOut(0);
+    private PositionVoltage m_anglePositionVoltage = new PositionVoltage(0);
 
     //simulation
     private TalonFXSimState m_angleMotorSim, m_driveMotorSim;
     private CANcoderSimState m_encoderSim;
+    
 
     public SwerveModule(SwerveConstants moduleIDConstants){
         m_angleMotor = new TalonFX(moduleIDConstants.kDriveMotorID());

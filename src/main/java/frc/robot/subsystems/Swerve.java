@@ -52,6 +52,9 @@ public class Swerve extends SubsystemBase{
         for(int i = 0; i < 4; i++){
             SmartDashboard.putNumber("mod" + i, m_swerveModules[i].m_driveMotor.getMotorVoltage().getValueAsDouble());
         }
+        if(this.getDefaultCommand() != null)
+            SmartDashboard.putString("Command name ", this.getDefaultCommand().getName());
+        
     }
 
     @Override

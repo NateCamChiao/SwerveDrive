@@ -26,17 +26,17 @@ public class RobotContainer {
     private SendableChooser<Double> robotSpeedChooser = new SendableChooser<Double>();
 
     public RobotContainer(){
-        // configureAutoOptions();
-        // configureBindings();
-        // s_swerve.setDefaultCommand(
-        //     new DriveCommand(
-        //         s_swerve, 
-        //         () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kXAxis)), 
-        //         () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kYAxis)),
-        //         () -> rotDirectionLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kRotationAxis)), 
-        //         false
-        //     )
-        // );
+        configureAutoOptions();
+        configureBindings();
+        s_swerve.setDefaultCommand(
+            new DriveCommand(
+                s_swerve, 
+                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kXAxis)), 
+                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kYAxis)),
+                () -> rotDirectionLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kRotationAxis)), 
+                false
+            )
+        );
         thing.setDefaultCommand(thing.defaultCommand());
 
 
@@ -46,7 +46,7 @@ public class RobotContainer {
 
     public void setCommandDefault(){
         SmartDashboard.putBoolean("FSDFSD", true);
-        s_swerve.setDefaultCommand(new InstantCommand(() -> SmartDashboard.putBoolean("asdklfsjdk", true), s_swerve));
+        // s_swerve.setDefaultCommand(new InstantCommand(() -> SmartDashboard.putBoolean("asdklfsjdk", true), s_swerve));
     }
 
     public void configureAutoOptions(){
@@ -66,8 +66,8 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        return new InstantCommand();
+        // return new InstantCommand();
 
-        //return autoChooser.getSelected();
+        return autoChooser.getSelected();
     }
 }
