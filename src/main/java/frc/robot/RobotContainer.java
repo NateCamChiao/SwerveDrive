@@ -57,7 +57,6 @@ public class RobotContainer {
     }
 
     public void configureBindings(){
-        btn.onTrue(new InstantCommand(() -> SmartDashboard.putBoolean("this calls", true)));
     }
 
     public Command getAutoCommand(){
