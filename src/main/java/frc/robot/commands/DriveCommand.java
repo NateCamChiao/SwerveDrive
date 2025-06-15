@@ -10,6 +10,7 @@ import com.ctre.phoenix6.Utils;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 
@@ -27,8 +28,9 @@ public class DriveCommand extends Command{
         this.isRobotCentric = isRobotCentric;
         addRequirements(swerve);
     }
-
+    @Override
     public void execute(){
+        SmartDashboard.putBoolean("swerve", true);
         double translation = MathUtil.applyDeadband(this.m_translationSup.getAsDouble(), kStickDeadband);
         double strafe = MathUtil.applyDeadband(this.m_strafeSup.getAsDouble(), kStickDeadband);
         double rotation = MathUtil.applyDeadband(this.m_rotationSup.getAsDouble(), kStickDeadband);
@@ -38,5 +40,10 @@ public class DriveCommand extends Command{
             rotation * Constants.Swerve.kMaxAngularVelocityRad,
             this.isRobotCentric
         );
+    }
+
+    @Override
+    public boolean isFinished(){
+        return false;
     }
 }

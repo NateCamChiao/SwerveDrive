@@ -4,6 +4,8 @@ import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionVoltage;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.sim.CANcoderSimState;
+import com.ctre.phoenix6.sim.TalonFXSimState;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
@@ -14,10 +16,14 @@ import frc.robot.Constants.Swerve;
 import frc.robot.Constants.SwerveConstants;
 
 public class SwerveModule {
-    private TalonFX m_angleMotor, m_driveMotor;
+    public TalonFX m_angleMotor, m_driveMotor;
     private CANcoder m_encoder;
     private DutyCycleOut m_driveDutyCycle;
     private PositionVoltage m_anglePositionVoltage;
+
+    //simulation
+    private TalonFXSimState m_angleMotorSim, m_driveMotorSim;
+    private CANcoderSimState m_encoderSim;
 
     public SwerveModule(SwerveConstants moduleIDConstants){
         m_angleMotor = new TalonFX(moduleIDConstants.kDriveMotorID());
@@ -73,5 +79,7 @@ public class SwerveModule {
         return m_driveMotor.getPosition().getValueAsDouble() * Swerve.wheelCircumference;
     }
 
-    
+    public void updateSim(){
+
+    }
 }

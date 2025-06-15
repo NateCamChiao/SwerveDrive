@@ -13,8 +13,8 @@ import frc.robot.utils.COTSFalconSwerveConstants;
 public final class Constants {
     public static final double periodicSpeed = Robot.kDefaultPeriod; // how quickly periodic methods are called. (millis)
     public static final class Joystick{
-        public static final double kStickDeadband = 0.05;
-        public static final double kSlewRateLimit = 0.05;
+        public static final double kStickDeadband = 0.01;
+        public static final double kSlewRateLimit = 0.01;
         public static final int kPort = 0;
         public static final int kXAxis = 1;
         public static final int kYAxis = 0;

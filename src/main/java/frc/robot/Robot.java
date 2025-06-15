@@ -27,10 +27,18 @@ public class Robot extends TimedRobot {
     if(m_autoCommand != null){
       m_autoCommand.cancel();
     }
+    robotContainer.setCommandDefault();
   }
+
   @Override
   public void robotInit(){
     CommandScheduler.getInstance().run();
   }
+
+  @Override 
+  public void simulationPeriodic(){}
+
+  @Override
+  public void teleopPeriodic(){}
 
 }

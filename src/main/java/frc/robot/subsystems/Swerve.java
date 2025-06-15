@@ -49,6 +49,14 @@ public class Swerve extends SubsystemBase{
         this.m_swerveDriveOdometry.update(getYaw(), getModulePositions());
         RobotContainer.m_simField.setRobotPose(this.getPose());
         SmartDashboard.putData(RobotContainer.m_simField);
+        for(int i = 0; i < 4; i++){
+            SmartDashboard.putNumber("mod" + i, m_swerveModules[i].m_driveMotor.getMotorVoltage().getValueAsDouble());
+        }
+    }
+
+    @Override
+    public void simulationPeriodic(){
+
     }
 
     public void drive(Translation2d translation, double rotationRad, boolean isFieldRelative){
@@ -61,7 +69,7 @@ public class Swerve extends SubsystemBase{
         }
         SwerveModuleState[] moduleStates = kSwerveKinematics.toSwerveModuleStates(ChassisSpeeds.discretize(chassisSpeeds, Constants.periodicSpeed));
         SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Swerve.kMaxSpeedMetersPerSec);
-        
+
         for(int i = 0; i < this.m_swerveModules.length; i++){
             this.m_swerveModules[i].setDesiredState(moduleStates[i]);
         }
