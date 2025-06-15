@@ -44,11 +44,6 @@ public class RobotContainer {
         SmartDashboard.putNumber("test", 0);
     }
 
-    public void setCommandDefault(){
-        SmartDashboard.putBoolean("FSDFSD", true);
-        // s_swerve.setDefaultCommand(new InstantCommand(() -> SmartDashboard.putBoolean("asdklfsjdk", true), s_swerve));
-    }
-
     public void configureAutoOptions(){
         autoChooser.setDefaultOption("Default Auto", new InstantCommand());
         autoChooser.addOption("auto1", new InstantCommand());
@@ -66,8 +61,6 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        // return new InstantCommand();
-
         return autoChooser.getSelected();
     }
 }

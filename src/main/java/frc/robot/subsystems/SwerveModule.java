@@ -65,7 +65,6 @@ public class SwerveModule {
     }
     //gets module positions for odometry
     public SwerveModulePosition getModulePosition(){
-        SmartDashboard.putNumber("test", getDriveDistMeters());
         return new SwerveModulePosition(
             getDriveDistMeters(),
             getAngle()
