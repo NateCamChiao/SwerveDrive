@@ -11,14 +11,12 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.Thing;
 
 public class RobotContainer {
     public static Field2d m_simField = new Field2d();
     private Swerve s_swerve = new Swerve();
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
     JoystickButton btn = new JoystickButton(joystick, 2);
-    public Thing thing = new Thing();
 
     private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
@@ -37,7 +35,6 @@ public class RobotContainer {
                 false
             )
         );
-        thing.setDefaultCommand(thing.defaultCommand());
 
 
         SmartDashboard.putData(RobotContainer.m_simField);
