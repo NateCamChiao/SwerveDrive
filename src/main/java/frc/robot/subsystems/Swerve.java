@@ -59,7 +59,9 @@ public class Swerve extends SubsystemBase{
 
     @Override
     public void simulationPeriodic(){
-
+        for(int i = 0; i < this.m_swerveModules.length; i++){
+            this.m_swerveModules[i].updateSim();
+        }
     }
 
     public void drive(Translation2d translation, double rotationRad, boolean isFieldRelative){

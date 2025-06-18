@@ -32,7 +32,7 @@ public class RobotContainer {
                 () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kXAxis)), 
                 () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kYAxis)),
                 () -> rotDirectionLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kRotationAxis)), 
-                false
+                true
             )
         );
 
