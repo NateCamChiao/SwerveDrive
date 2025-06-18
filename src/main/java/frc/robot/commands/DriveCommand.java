@@ -18,14 +18,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class DriveCommand extends Command{
     private Swerve s_swerveBase;
     private DoubleSupplier m_translationSup, m_strafeSup, m_rotationSup;
-    private boolean isRobotCentric;
+    private boolean isFieldCentric;
 
-    public DriveCommand(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, boolean isRobotCentric){
+    public DriveCommand(Swerve swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, boolean isFieldCentric){
         this.s_swerveBase = swerve;
         this.m_translationSup = translationSup;
         this.m_strafeSup = strafeSup;
         this.m_rotationSup = rotationSup;
-        this.isRobotCentric = isRobotCentric;
+        this.isFieldCentric = isFieldCentric;
         addRequirements(swerve);
     }
     @Override
@@ -38,7 +38,7 @@ public class DriveCommand extends Command{
         s_swerveBase.drive(
             new Translation2d(translation, strafe).times(Constants.Swerve.kMaxSpeedMetersPerSec),
             rotation * Constants.Swerve.kMaxAngularVelocityRad,
-            this.isRobotCentric
+            this.isFieldCentric
         );
     }
 
