@@ -46,27 +46,27 @@ public final class Constants {
             new Translation2d(-halfWheelBase, -halfTrackWidth)
         );
         public static final class FLModule{
-            public static final int kDriveID = 0;
-            public static final int kTurnID = 0;
-            public static final int kEncoderID = 0;
+            public static final int kDriveID = 1;
+            public static final int kTurnID = 2;
+            public static final int kEncoderID = 1;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
         public static final class FRModule{
-            public static final int kDriveID = 0;
-            public static final int kTurnID = 0;
-            public static final int kEncoderID = 0;
+            public static final int kDriveID = 3;
+            public static final int kTurnID = 4;
+            public static final int kEncoderID = 2;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
         public static final class BLModule{
-            public static final int kDriveID = 0;
-            public static final int kTurnID = 0;
-            public static final int kEncoderID = 0;
+            public static final int kDriveID = 5;
+            public static final int kTurnID = 6;
+            public static final int kEncoderID = 3;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
         public static final class BRModule{
-            public static final int kDriveID = 0;
-            public static final int kTurnID = 0;
-            public static final int kEncoderID = 0;
+            public static final int kDriveID = 7;
+            public static final int kTurnID = 8;
+            public static final int kEncoderID = 4;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
 
