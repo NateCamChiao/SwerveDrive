@@ -46,14 +46,14 @@ public final class Constants {
             new Translation2d(-halfWheelBase, -halfTrackWidth)
         );
         public static final class FLModule{
-            public static final int kDriveID = 3;
-            public static final int kTurnID = 4;
+            public static final int kDriveID = 1;
+            public static final int kTurnID = 2;
             public static final int kEncoderID = 1;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
         public static final class FRModule{
-            public static final int kDriveID = 1;
-            public static final int kTurnID = 2;
+            public static final int kDriveID = 3;
+            public static final int kTurnID = 4;
             public static final int kEncoderID = 2;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
         }
