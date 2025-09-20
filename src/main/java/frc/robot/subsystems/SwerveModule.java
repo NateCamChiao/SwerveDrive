@@ -27,8 +27,8 @@ public class SwerveModule {
     
 
     public SwerveModule(SwerveConstants moduleIDConstants){
-        m_angleMotor = new TalonFX(moduleIDConstants.kDriveMotorID());
-        m_driveMotor = new TalonFX(moduleIDConstants.kAngleMotorID());
+        m_driveMotor = new TalonFX(moduleIDConstants.kDriveMotorID());
+        m_angleMotor = new TalonFX(moduleIDConstants.kAngleMotorID());
         m_encoder = new CANcoder(moduleIDConstants.kCancoderID());
 
         m_angleMotor.getConfigurator().apply(Swerve.kCTREConfigs.swerveAngleFXConfig);
