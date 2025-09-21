@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Constants;
 import frc.robot.Constants.Swerve;
 // import static frc.robot.Constants.Swerve;
 import frc.robot.Constants.SwerveConstants;
@@ -76,7 +77,13 @@ public class SwerveModule {
     }
 
     public double getDriveDistMeters(){
-        return m_driveMotor.getPosition().getValueAsDouble() * Swerve.wheelCircumference;
+        return m_driveMotor.getPosition().getValueAsDouble() * Swerve.kWheelCircumference;
+    }
+
+    public SwerveModuleState getSwerveModuleState(){
+        double speedMetersPerSecond = this.m_driveMotor.getVelocity().getValueAsDouble() * Constants.Swerve.kWheelCircumference;
+        Rotation2d moduleAngle = this.getAngle();
+        return new SwerveModuleState(speedMetersPerSecond, moduleAngle);
     }
 
     public void updateSim(){

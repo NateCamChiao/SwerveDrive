@@ -32,7 +32,7 @@ public final class Constants {
         public static final double kMaxSpeedMetersPerSec = 6.14;
         public static final double kMaxAngularVelocityRad = Math.PI;
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
-        public static final double wheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
+        public static final double kWheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)
         public static final double kWheelBase = Units.inchesToMeters(19.25);
         //distance from middle of tire to middle of other tire (width of car)

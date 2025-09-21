@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -13,6 +14,7 @@ import frc.robot.commands.DriveCommand;
 import frc.robot.subsystems.Swerve;
 
 public class RobotContainer {
+    public static NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
     public static Field2d m_simField = new Field2d();
     private Swerve s_swerve = new Swerve();
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);

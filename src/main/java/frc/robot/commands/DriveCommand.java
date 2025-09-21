@@ -6,8 +6,6 @@ import frc.robot.subsystems.Swerve;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.Utils;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
