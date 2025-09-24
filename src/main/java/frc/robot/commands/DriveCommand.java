@@ -32,7 +32,10 @@ public class DriveCommand extends Command{
         double translation = MathUtil.applyDeadband(this.m_translationSup.getAsDouble(), kStickDeadband);
         double strafe = MathUtil.applyDeadband(this.m_strafeSup.getAsDouble(), kStickDeadband);
         double rotation = MathUtil.applyDeadband(this.m_rotationSup.getAsDouble(), kStickDeadband);
-
+        SmartDashboard.putNumber("x", translation);
+        SmartDashboard.putNumber("y", strafe);
+        SmartDashboard.putBoolean("x == y", translation == strafe);
+        
         s_swerveBase.drive(
             new Translation2d(translation, strafe).times(Constants.Swerve.kMaxSpeedMetersPerSec),
             rotation * Constants.Swerve.kMaxAngularVelocityRad,

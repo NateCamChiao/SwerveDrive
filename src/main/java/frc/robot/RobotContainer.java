@@ -31,9 +31,9 @@ public class RobotContainer {
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
-                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kXAxis)), 
-                () -> joystickRateLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kYAxis)),
-                () -> rotDirectionLimiter.calculate(joystick.getRawAxis(Constants.Joystick.kRotationAxis)), 
+                () -> joystick.getRawAxis(Constants.Joystick.kXAxis), 
+                () -> joystick.getRawAxis(Constants.Joystick.kYAxis),
+                () -> joystick.getRawAxis(Constants.Joystick.kRotationAxis), 
                 true
             )
         );

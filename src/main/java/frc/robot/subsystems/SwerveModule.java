@@ -41,9 +41,11 @@ public class SwerveModule {
     //sets integrated encoder to absolute position
     //eliminates need to manually align swerves
     public void resetToAbsolute(){
+        // this.m_angleMotor.setPosition(0);
         //difference between absolute angle and relative angle
-        double absoultePosition = m_encoder.getPosition().getValueAsDouble() - m_angleMotor.getPosition().getValueAsDouble();
-        this.m_angleMotor.setPosition(absoultePosition);
+        double absolutePosition = m_encoder.getAbsolutePosition().getValueAsDouble();
+        // double absoultePosition = m_encoder.getPosition().getValueAsDouble() - m_angleMotor.getPosition().getValueAsDouble();
+        this.m_angleMotor.setPosition(absolutePosition);
     }
 
 
