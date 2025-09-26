@@ -15,7 +15,6 @@ public class CTREConfigs {
         swerveCanCoderConfig = new CANcoderConfiguration();
 
         swerveCanCoderConfig.MagnetSensor.SensorDirection = kCanCoderInvert;
-        
 
         /** Swerve Angle Motor Configurations */
         /* Motor Inverts and Neutral Mode */

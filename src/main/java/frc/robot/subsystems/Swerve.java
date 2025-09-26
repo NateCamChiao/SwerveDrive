@@ -34,7 +34,7 @@ public class Swerve extends SubsystemBase{
     private final StructPublisher<ChassisSpeeds> measuredChassisPub = ntInstance.getStructTopic("Measured Chassis Speeds", ChassisSpeeds.struct).publish();
     private final StructPublisher<ChassisSpeeds> desiredChassisPub = ntInstance.getStructTopic("Desired Chassis Speeds", ChassisSpeeds.struct).publish();
     public Swerve(){
-        this.m_gryo = new AHRS(NavXComType.kI2C);
+        this.m_gryo = new AHRS(NavXComType.kMXP_SPI);
         //makes sure robot drives field relative
         zeroGyro();
         this.m_swerveModules = new SwerveModule[]{
@@ -63,6 +63,9 @@ public class Swerve extends SubsystemBase{
         for(int i = 0; i < 4; i++){
             SmartDashboard.putNumber("mod" + i, m_swerveModules[i].m_driveMotor.getMotorVoltage().getValueAsDouble());
             swerveModuleStates[i] = m_swerveModules[i].getSwerveModuleState();
+
+            SmartDashboard.putNumber("Mod " + i, m_swerveModules[i].m_angleMotor.getPosition().getValueAsDouble());
+            SmartDashboard.putNumber("Mod encoder" + i, m_swerveModules[i].m_encoder.getPosition().getValueAsDouble());
         }
         if(this.getDefaultCommand() != null)
             SmartDashboard.putString("Command name ", this.getDefaultCommand().getName());
@@ -72,6 +75,7 @@ public class Swerve extends SubsystemBase{
         this.measuredChassisPub.set(
             Constants.Swerve.kSwerveKinematics.toChassisSpeeds(swerveModuleStates)
         );        
+        SmartDashboard.putNumber("gyro", getYaw().getDegrees());
     }
 
     @Override
@@ -111,12 +115,13 @@ public class Swerve extends SubsystemBase{
     }
 
     public Rotation2d getYaw(){
-        return Rotation2d.fromDegrees(360 - m_gryo.getAngle());
+        return Rotation2d.fromDegrees(-m_gryo.getYaw());
     }
     //sweve modules
     public void alignModules(){
         for(SwerveModule mod : this.m_swerveModules){
             mod.resetToAbsolute();
+            
         }
     }
     public SwerveModulePosition[] getModulePositions(){

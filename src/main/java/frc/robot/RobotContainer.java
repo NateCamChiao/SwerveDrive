@@ -31,12 +31,13 @@ public class RobotContainer {
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
-                () -> joystick.getRawAxis(Constants.Joystick.kXAxis), 
+                () -> -joystick.getRawAxis(Constants.Joystick.kXAxis), 
                 () -> joystick.getRawAxis(Constants.Joystick.kYAxis),
-                () -> joystick.getRawAxis(Constants.Joystick.kRotationAxis), 
+                () -> joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
                 true
             )
         );
+
 
 
         SmartDashboard.putData(RobotContainer.m_simField);

@@ -18,13 +18,15 @@ import frc.robot.Constants.SwerveConstants;
 
 public class SwerveModule {
     public TalonFX m_angleMotor, m_driveMotor;
-    private CANcoder m_encoder;
+    public CANcoder m_encoder;
     private DutyCycleOut m_driveDutyCycle = new DutyCycleOut(0);
     private PositionVoltage m_anglePositionVoltage = new PositionVoltage(0);
 
     //simulation
     private TalonFXSimState m_angleMotorSim, m_driveMotorSim;
     private CANcoderSimState m_encoderSim;
+
+    private double angleOffset = 0;
     
 
     public SwerveModule(SwerveConstants moduleIDConstants){
@@ -37,15 +39,17 @@ public class SwerveModule {
         m_encoder.getConfigurator().apply(Swerve.kCTREConfigs.swerveCanCoderConfig);
         //zero drive encoder
         m_driveMotor.getConfigurator().setPosition(0);
+        angleOffset = moduleIDConstants.kAngleOffset();
     }
     //sets integrated encoder to absolute position
     //eliminates need to manually align swerves
     public void resetToAbsolute(){
         // this.m_angleMotor.setPosition(0);
         //difference between absolute angle and relative angle
-        double absolutePosition = m_encoder.getAbsolutePosition().getValueAsDouble();
+        double absolutePosition = m_encoder.getPosition().getValueAsDouble() - m_encoder.getAbsolutePosition().getValueAsDouble();
         // double absoultePosition = m_encoder.getPosition().getValueAsDouble() - m_angleMotor.getPosition().getValueAsDouble();
-        this.m_angleMotor.setPosition(absolutePosition);
+        
+        this.m_angleMotor.setPosition(m_encoder.getPosition().getValueAsDouble() - angleOffset);
     }
 
 

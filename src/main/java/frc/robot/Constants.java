@@ -13,7 +13,7 @@ import frc.robot.utils.COTSFalconSwerveConstants;
 public final class Constants {
     public static final double periodicSpeed = Robot.kDefaultPeriod; // how quickly periodic methods are called. (millis)
     public static final class Joystick{
-        public static final double kStickDeadband = 0.1;
+        public static final double kStickDeadband = 0.12;
         public static final double kSlewRateLimit = 0.9; // larger the number, faster you can change output
         public static final int kPort = 0;
         public static final int kXAxis = 0;
@@ -26,17 +26,17 @@ public final class Constants {
     }
     
     //all swerve subsystem constants, should just be IDs
-    public record SwerveConstants(int kDriveMotorID, int kAngleMotorID, int kCancoderID){}
+    public record SwerveConstants(int kDriveMotorID, int kAngleMotorID, int kCancoderID, double kAngleOffset){}
 
     public static final class Swerve{
-        public static final double kMaxSpeedMetersPerSec = 6.14;
+        public static final double kMaxSpeedMetersPerSec = 6.5;
         public static final double kMaxAngularVelocityRad = Math.PI;
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
         public static final double kWheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)
-        public static final double kWheelBase = Units.inchesToMeters(19.25);
+        public static final double kWheelBase = Units.inchesToMeters(24.75);
         //distance from middle of tire to middle of other tire (width of car)
-        public static final double kTrackWidth = Units.inchesToMeters(19);
+        public static final double kTrackWidth = Units.inchesToMeters(24.75);
         //used to define kinematics (optional)
         public static final double halfWheelBase = kWheelBase / 2;
         public static final double halfTrackWidth = kTrackWidth / 2;
@@ -50,25 +50,29 @@ public final class Constants {
             public static final int kDriveID = 1;
             public static final int kTurnID = 2;
             public static final int kEncoderID = 1;
-            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
+            public static final double kOffsetAngle = -0.079590;
+            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class FRModule{
             public static final int kDriveID = 3;
             public static final int kTurnID = 4;
             public static final int kEncoderID = 2;
-            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
+            public static final double kOffsetAngle = -0.215576;
+            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class BLModule{
             public static final int kDriveID = 5;
             public static final int kTurnID = 6;
             public static final int kEncoderID = 3;
-            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
+            public static final double kOffsetAngle = 0.256348;
+            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class BRModule{
             public static final int kDriveID = 7;
             public static final int kTurnID = 8;
             public static final int kEncoderID = 4;
-            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID);
+            public static final double kOffsetAngle = -0.462646;
+            public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
 
         public static final CTREConfigs kCTREConfigs = new CTREConfigs();
@@ -78,7 +82,7 @@ public final class Constants {
             public static final double kAngleGearRatio = Swerve.kSwerveSpecialtyModule.angleGearRatio;
 
             /* Motor Inverts */
-            public static final InvertedValue kAngleMotorInvert = InvertedValue.CounterClockwise_Positive;
+            public static final InvertedValue kAngleMotorInvert = InvertedValue.Clockwise_Positive;
             public static final InvertedValue kDriveMotorInvert = InvertedValue.Clockwise_Positive;
 
             /* Angle Encoder Invert */
