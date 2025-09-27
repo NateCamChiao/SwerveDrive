@@ -60,6 +60,8 @@ public class Swerve extends SubsystemBase{
             this.getYaw(),
             getModulePositions()
         );
+
+        configureAutoBuilder();
     }
     @Override
     public void periodic(){
@@ -117,8 +119,8 @@ public class Swerve extends SubsystemBase{
         return this.m_swerveDriveOdometry.getPoseMeters();
     }
 
-    public void resetPose(){
-        this.m_swerveDriveOdometry.resetPose(new Pose2d());
+    public void resetPose(Pose2d newPose){
+        this.m_swerveDriveOdometry.resetPose(newPose);
     } 
     //gyro
 
@@ -159,30 +161,36 @@ public class Swerve extends SubsystemBase{
         return kSwerveKinematics.toChassisSpeeds(this.getModuleStates());
     }
 
-    public void driveAuto(ChassisSpeeds speeds){
-        // cool stuff
+    public void driveAuto(ChassisSpeeds driveSpeeds){
+        SwerveModuleState[] desiredStates = kSwerveKinematics.toSwerveModuleStates(
+            ChassisSpeeds.discretize(driveSpeeds, 0.02)
+        );
+        for(int i = 0; i < this.m_swerveModules.length; i++){
+            this.m_swerveModules[i].setDesiredState(desiredStates[i]);
+        }
     }
 
     public void configureAutoBuilder(){
         RobotConfig config;
         try{
             config = RobotConfig.fromGUISettings();
+            AutoBuilder.configure(
+                this::getPose,
+                this::resetPose,
+                this::getRobotRelativeSpeeds,
+                (speeds, feedforwards) -> this.driveAuto(speeds),
+                new PPHolonomicDriveController(
+                    new PIDConstants(5.0), 
+                    new PIDConstants(2.5)
+                ),
+                config,
+                () -> false,
+                this
+            );
         } catch (Exception e) {
             // Handle exception as needed
             e.printStackTrace();
         }
-        AutoBuilder.configure(
-            () -> this.getPose(),
-            () -> this.resetPose(),
-            () -> this.getRobotRelativeSpeeds(),
-            (speeds, feedforwards) -> this.driveAuto(speeds),
-            new PPHolonomicDriveController(
-                new PIDConstants(5.0), 
-                new PIDConstants(5.0)
-            ),
-            config,
-            () -> false,
-            this
-        );
+        
     }
 }
