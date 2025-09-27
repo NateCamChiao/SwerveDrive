@@ -14,6 +14,7 @@ public final class Constants {
     public static final double periodicSpeed = Robot.kDefaultPeriod; // how quickly periodic methods are called. (millis)
     public static final class Joystick{
         public static final double kStickDeadband = 0.12;
+        public static final double kRotationDeadband = 0.2;
         public static final double kSlewRateLimit = 0.9; // larger the number, faster you can change output
         public static final int kPort = 0;
         public static final int kXAxis = 0;
@@ -30,7 +31,8 @@ public final class Constants {
 
     public static final class Swerve{
         public static final double kMaxSpeedMetersPerSec = 6.5;
-        public static final double kMaxAngularVelocityRad = Math.PI;
+        public static final double maxDriveSpeed = 0.5 * kMaxSpeedMetersPerSec;
+        public static final double kMaxAngularVelocityRad = 0.5 * Math.PI;
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
         public static final double kWheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)

@@ -1,10 +1,18 @@
 package frc.robot.subsystems;
 import static frc.robot.Constants.Swerve.*;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.Constants;
+import frc.robot.Constants.Swerve.BLModule;
+import frc.robot.Constants.Swerve.BRModule;
+import frc.robot.Constants.Swerve.FLModule;
+import frc.robot.Constants.Swerve.FRModule;
 import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveModule;
@@ -108,6 +116,10 @@ public class Swerve extends SubsystemBase{
     public Pose2d getPose(){
         return this.m_swerveDriveOdometry.getPoseMeters();
     }
+
+    public void resetPose(){
+        this.m_swerveDriveOdometry.resetPose(new Pose2d());
+    } 
     //gyro
 
     public void zeroGyro(){
@@ -115,7 +127,10 @@ public class Swerve extends SubsystemBase{
     }
 
     public Rotation2d getYaw(){
-        return Rotation2d.fromDegrees(-m_gryo.getYaw());
+        SmartDashboard.putNumber("gyro offset", 
+            Rotation2d.fromDegrees(-m_gryo.getYaw()).plus(Rotation2d.kCCW_90deg).getDegrees()
+        );
+        return Rotation2d.fromDegrees(-m_gryo.getYaw()).plus(Rotation2d.kCCW_90deg);
     }
     //sweve modules
     public void alignModules(){
@@ -130,5 +145,44 @@ public class Swerve extends SubsystemBase{
             modPositions[i] = this.m_swerveModules[i].getModulePosition();
         }
         return modPositions;
+    }
+
+    public SwerveModuleState[] getModuleStates(){
+        SwerveModuleState[] modStates = new SwerveModuleState[4];
+        for(int i = 0; i < this.m_swerveModules.length; i++){
+            modStates[i] = this.m_swerveModules[i].getSwerveModuleState();
+        }
+        return modStates;
+    }
+
+    public ChassisSpeeds getRobotRelativeSpeeds(){
+        return kSwerveKinematics.toChassisSpeeds(this.getModuleStates());
+    }
+
+    public void driveAuto(ChassisSpeeds speeds){
+        // cool stuff
+    }
+
+    public void configureAutoBuilder(){
+        RobotConfig config;
+        try{
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            // Handle exception as needed
+            e.printStackTrace();
+        }
+        AutoBuilder.configure(
+            () -> this.getPose(),
+            () -> this.resetPose(),
+            () -> this.getRobotRelativeSpeeds(),
+            (speeds, feedforwards) -> this.driveAuto(speeds),
+            new PPHolonomicDriveController(
+                new PIDConstants(5.0), 
+                new PIDConstants(5.0)
+            ),
+            config,
+            () -> false,
+            this
+        );
     }
 }
