@@ -1,6 +1,9 @@
 package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
@@ -11,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
+import frc.robot.commands.DriveToPoint;
 import frc.robot.subsystems.Swerve;
 
 public class RobotContainer {
@@ -19,6 +23,7 @@ public class RobotContainer {
     private Swerve s_swerve = new Swerve();
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
     JoystickButton btn = new JoystickButton(joystick, 2);
+    JoystickButton driveForwardBtn = new JoystickButton(joystick, 3);
 
     private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
@@ -57,6 +62,10 @@ public class RobotContainer {
     }
 
     public void configureBindings(){
+        this.driveForwardBtn.onTrue(new DriveToPoint(s_swerve, new Transform2d(
+            new Translation2d(0.3, 0),
+            Rotation2d.fromDegrees(0)
+        )));
     }
 
     public Command getAutoCommand(){
