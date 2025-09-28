@@ -9,6 +9,7 @@ import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
 import frc.robot.Constants;
+import frc.robot.LimelightWrapper;
 import frc.robot.Constants.Swerve.BLModule;
 import frc.robot.Constants.Swerve.BRModule;
 import frc.robot.Constants.Swerve.FLModule;
@@ -35,6 +36,7 @@ public class Swerve extends SubsystemBase{
     private AHRS m_gryo;
     private final SwerveModule[] m_swerveModules;
     private final SwerveDriveOdometry m_swerveDriveOdometry;
+    private final LimelightWrapper limelight = new LimelightWrapper("limelight1");// TODO Rename this to name of limelight
 
     //logging SwerveModuleStates (advantagescope)
     private final StructArrayPublisher<SwerveModuleState> measuredModuleStatePub = ntInstance.getStructArrayTopic("Measured Module States", SwerveModuleState.struct).publish();
