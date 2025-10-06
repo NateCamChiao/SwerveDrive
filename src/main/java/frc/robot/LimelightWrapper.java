@@ -7,7 +7,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 public class LimelightWrapper {
-    private NetworkTableInstance ntInstance = RobotContainer.ntInstance;
     private String limelightName = "";
     public LimelightWrapper(String limelightName){
         this.limelightName = limelightName;
