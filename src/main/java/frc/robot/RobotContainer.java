@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.AlignToReef;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.DriveToPoint;
 import frc.robot.subsystems.Swerve;
@@ -24,6 +25,8 @@ public class RobotContainer {
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
     JoystickButton btn = new JoystickButton(joystick, 2);
     JoystickButton driveForwardBtn = new JoystickButton(joystick, 3);
+    JoystickButton alignToReefLeftBtn = new JoystickButton(joystick, 5);
+    JoystickButton alignToReefRightBtn = new JoystickButton(joystick, 6);
 
     private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
@@ -66,6 +69,13 @@ public class RobotContainer {
             new Translation2d(0.3, 0),
             Rotation2d.fromDegrees(0)
         )));
+
+        this.alignToReefLeftBtn.whileTrue(
+            new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, true)
+        );
+        this.alignToReefLeftBtn.whileTrue(
+            new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, false)
+        );
     }
 
     public Command getAutoCommand(){

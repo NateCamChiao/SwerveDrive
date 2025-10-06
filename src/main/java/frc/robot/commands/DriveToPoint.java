@@ -26,20 +26,11 @@ public class DriveToPoint extends Command{
         this.relativeTransform = relativeTransform;
     }
 
-    public PathPlannerPath createPathplannerPath(Transform2d relativeTransform){
-        List<Waypoint> pathWaypoints = PathPlannerPath.waypointsFromPoses(
-            this.swerveSub.getPose(),
-            this.swerveSub.getPose().plus(relativeTransform)
-        );
-        return new PathPlannerPath(
-            pathWaypoints,
-            null, 
-            null, 
-            new GoalEndState(0, Rotation2d.fromDegrees(0)));
-    }
+    
 
     public void initialize(){
-        PathPlannerPath path = createPathplannerPath(this.relativeTransform);
+        //preserves original heading (shouldn't rotate)
+        PathPlannerPath path = this.swerveSub.createPathplannerPath(this.relativeTransform, this.swerveSub.getYaw());
         CommandScheduler.getInstance().schedule(
             AutoBuilder.followPath(path)
         );

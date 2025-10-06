@@ -5,6 +5,9 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import com.studica.frc.AHRS;
 import com.studica.frc.AHRS.NavXComType;
 
@@ -19,6 +22,7 @@ import frc.robot.RobotContainer;
 import frc.robot.subsystems.SwerveModule;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -31,6 +35,9 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.RobotContainer.ntInstance;
+
+import java.util.List;
+import java.util.function.Supplier;
 
 public class Swerve extends SubsystemBase{
     private AHRS m_gryo;
@@ -195,4 +202,22 @@ public class Swerve extends SubsystemBase{
         }
         
     }
+
+    public PathPlannerPath createPathplannerPath(Transform2d relativeTransform, Rotation2d endRotation){
+        List<Waypoint> pathWaypoints = PathPlannerPath.waypointsFromPoses(
+            this.getPose(),
+            this.getPose().plus(relativeTransform)
+        );
+        return new PathPlannerPath(
+            pathWaypoints,
+            null, 
+            null, 
+            new GoalEndState(0, endRotation));
+    }
+
+    public Transform2d tagAlignmentSupplier(){
+        return limelight.getNearestTagOffset();
+    }
+
+    
 }
