@@ -170,7 +170,12 @@ public class Swerve extends SubsystemBase{
         return kSwerveKinematics.toChassisSpeeds(this.getModuleStates());
     }
 
-    public void driveAuto(ChassisSpeeds driveSpeeds){
+    public void driveAuto(ChassisSpeeds PPChassisSpeeds){
+        ChassisSpeeds driveSpeeds = new ChassisSpeeds(
+            PPChassisSpeeds.vxMetersPerSecond,
+            PPChassisSpeeds.vyMetersPerSecond,
+            -PPChassisSpeeds.omegaRadiansPerSecond
+        );
         SwerveModuleState[] desiredStates = kSwerveKinematics.toSwerveModuleStates(
             ChassisSpeeds.discretize(driveSpeeds, 0.02)
         );
