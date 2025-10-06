@@ -23,6 +23,9 @@ public class AlignToReef extends Command{
 
   public void initialize(){
     //transform to tag from robot pov
+    /*
+     * This probably isn't right and some trig is probably needed to find target position
+     */
     Transform2d robotToTagOffset = tagOffsetSupplier.get();
     if(this.alignLeft){
       robotToTagOffset.plus(new Transform2d(0, 1, Rotation2d.kZero));
