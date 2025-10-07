@@ -186,7 +186,7 @@ public class Swerve extends SubsystemBase{
                 (speeds, feedforwards) -> this.driveAuto(speeds),
                 new PPHolonomicDriveController(
                     new PIDConstants(5.0), 
-                    new PIDConstants(2.5)
+                    new PIDConstants(2.7)
                 ),
                 config,
                 () -> false,

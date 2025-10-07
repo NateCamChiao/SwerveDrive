@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.Joystick;
@@ -60,6 +62,6 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        return autoChooser.getSelected();
+        return AutoBuilder.buildAuto("Drive Forward (a)");
     }
 }
