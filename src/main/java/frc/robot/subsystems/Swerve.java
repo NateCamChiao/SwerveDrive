@@ -221,7 +221,7 @@ public class Swerve extends SubsystemBase{
     }
 
     public Transform2d tagAlignmentSupplier(){
-        return limelight.getNearestTagOffset();
+        return limelight.getNearestTagWith3DOffset();
     }
 
     

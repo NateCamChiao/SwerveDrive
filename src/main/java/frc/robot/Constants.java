@@ -4,7 +4,9 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
+import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.robot.subsystems.SwerveModule;
@@ -24,6 +26,12 @@ public final class Constants {
     //operator input
     public static final class OI{
         
+    }
+
+    public static final class LimelightConstants{
+        public static final Translation3d translationOffset = new Translation3d(); //TODO fill this out later
+        public static final Rotation3d rotationOffset = new Rotation3d();
+        public static final Translation3d tagToBranchOffset =  new Translation3d();
     }
     
     //all swerve subsystem constants, should just be IDs

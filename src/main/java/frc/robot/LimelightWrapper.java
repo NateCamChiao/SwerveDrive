@@ -5,14 +5,24 @@ import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import static frc.robot.Constants.LimelightConstants.*;
 
 public class LimelightWrapper {
     private String limelightName = "";
     public LimelightWrapper(String limelightName){
         this.limelightName = limelightName;
+        LimelightHelpers.setCameraPose_RobotSpace(
+            limelightName, 
+            translationOffset.getX(), 
+            translationOffset.getY(), 
+            translationOffset.getZ(), 
+            rotationOffset.getX(), 
+            rotationOffset.getY(), 
+            rotationOffset.getZ()
+        );
     }
 
-    public Transform2d getNearestTagOffset(){
+    public Transform2d getNearestTagWith3DOffset(){
         double[] offsetData = LimelightHelpers.getTargetPose_RobotSpace(limelightName);
         double xOffset = offsetData[0];
         double yOffset = offsetData[1];
@@ -22,5 +32,15 @@ public class LimelightWrapper {
             yOffset,
             Rotation2d.fromDegrees(rotationOffset)
         );
+    }
+
+    public Transform2d getTransformToBranch(boolean isLeft){
+        //sets 3d offset based on branch we're trying to align to then grabs nearest tag
+        double xValue = tagToBranchOffset.getX();
+        if(isLeft){
+            xValue = -xValue; //TODO might need to be changed
+        }
+        LimelightHelpers.SetFidcuial3DOffset(limelightName, xValue, tagToBranchOffset.getY(), tagToBranchOffset.getZ());
+        return getNearestTagWith3DOffset();
     }
 }
