@@ -38,6 +38,7 @@ public class AlignToReef extends Command{
     CommandScheduler.getInstance().schedule(
       AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation))
     );
+    AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation));
   }
   public boolean isFinished(){
     return true;
