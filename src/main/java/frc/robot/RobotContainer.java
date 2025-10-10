@@ -1,5 +1,7 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -36,9 +38,9 @@ public class RobotContainer {
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
-                () -> -joystick.getRawAxis(Constants.Joystick.kXAxis), 
-                () -> joystick.getRawAxis(Constants.Joystick.kYAxis),
-                () -> joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
+                () -> joystick.getRawAxis(Constants.Joystick.kXAxis), 
+                () -> -joystick.getRawAxis(Constants.Joystick.kYAxis),
+                () -> -joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
                 true
             )
         );
@@ -69,6 +71,6 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        return autoChooser.getSelected();
+        return AutoBuilder.buildAuto("Rotate while moving (a)");
     }
 }

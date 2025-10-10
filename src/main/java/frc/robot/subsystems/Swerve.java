@@ -165,7 +165,7 @@ public class Swerve extends SubsystemBase{
         ChassisSpeeds driveSpeeds = new ChassisSpeeds(
             PPChassisSpeeds.vxMetersPerSecond,
             PPChassisSpeeds.vyMetersPerSecond,
-            -PPChassisSpeeds.omegaRadiansPerSecond
+            PPChassisSpeeds.omegaRadiansPerSecond
         );
         SwerveModuleState[] desiredStates = kSwerveKinematics.toSwerveModuleStates(
             ChassisSpeeds.discretize(driveSpeeds, 0.02)
@@ -186,7 +186,7 @@ public class Swerve extends SubsystemBase{
                 (speeds, feedforwards) -> this.driveAuto(speeds),
                 new PPHolonomicDriveController(
                     new PIDConstants(5.0), 
-                    new PIDConstants(2.5)
+                    new PIDConstants(2.7)
                 ),
                 config,
                 () -> false,
