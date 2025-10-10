@@ -33,9 +33,9 @@ public class RobotContainer {
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
-                () -> -joystick.getRawAxis(Constants.Joystick.kXAxis), 
-                () -> joystick.getRawAxis(Constants.Joystick.kYAxis),
-                () -> joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
+                () -> joystick.getRawAxis(Constants.Joystick.kXAxis), 
+                () -> -joystick.getRawAxis(Constants.Joystick.kYAxis),
+                () -> -joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
                 true
             )
         );
@@ -62,6 +62,6 @@ public class RobotContainer {
     }
 
     public Command getAutoCommand(){
-        return AutoBuilder.buildAuto("Drive Forward (a)");
+        return AutoBuilder.buildAuto("Rotate while moving (a)");
     }
 }
