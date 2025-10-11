@@ -13,9 +13,9 @@ public class LimelightWrapper {
         this.limelightName = limelightName;
         LimelightHelpers.setCameraPose_RobotSpace(
             limelightName, 
-            translationOffset.getX(), 
-            translationOffset.getY(), 
-            translationOffset.getZ(), 
+            translationToRobot.getX(), 
+            translationToRobot.getY(), 
+            translationToRobot.getZ(), 
             rotationOffset.getX(), 
             rotationOffset.getY(), 
             rotationOffset.getZ()

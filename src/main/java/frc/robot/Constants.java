@@ -33,7 +33,7 @@ public final class Constants {
             Source measurment: 6.38 (inches)
             Hand measurment: 7.5 inches
          */
-        public static final Translation3d translationOffset = new Translation3d(); //TODO fill this out later
+        public static final Translation3d translationToRobot = new Translation3d(); //TODO fill this out later
         public static final Rotation3d rotationOffset = new Rotation3d();
         public static final Translation3d tagToBranchOffset =  new Translation3d();
     }
