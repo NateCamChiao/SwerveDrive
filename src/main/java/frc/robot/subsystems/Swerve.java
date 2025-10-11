@@ -95,6 +95,10 @@ public class Swerve extends SubsystemBase{
             Constants.Swerve.kSwerveKinematics.toChassisSpeeds(swerveModuleStates)
         );        
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
+        Transform2d limelightTransform = limelight.getNearestTagWith3DOffset();
+        SmartDashboard.putNumber("Limelight x", limelightTransform.getX());
+        SmartDashboard.putNumber("Limelight y", limelightTransform.getY());
+        SmartDashboard.putNumber("Limelight angle", limelightTransform.getRotation().getDegrees());
     }
 
     @Override
