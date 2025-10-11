@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
@@ -26,6 +28,7 @@ public class RobotContainer {
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
     JoystickButton btn = new JoystickButton(joystick, 2);
     JoystickButton driveForwardBtn = new JoystickButton(joystick, 3);
+
 
     private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
@@ -65,7 +68,7 @@ public class RobotContainer {
 
     public void configureBindings(){
         this.driveForwardBtn.onTrue(new DriveToPoint(s_swerve, new Transform2d(
-            new Translation2d(0.3, 0),
+            new Translation2d(1, 0),
             Rotation2d.fromDegrees(0)
         )));
     }

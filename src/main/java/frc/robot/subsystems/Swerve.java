@@ -184,12 +184,15 @@ public class Swerve extends SubsystemBase{
                 this::resetPose,
                 this::getRobotRelativeSpeeds,
                 (speeds, feedforwards) -> this.driveAuto(speeds),
+
                 new PPHolonomicDriveController(
-                    new PIDConstants(5.0), 
-                    new PIDConstants(2.7)
+                    new PIDConstants(0.7
+                    , 0.5, 1.3), 
+                    new PIDConstants(5)
                 ),
                 config,
                 () -> false,
+
                 this
             );
         } catch (Exception e) {
