@@ -17,17 +17,22 @@ public class RobotContainer {
     public static NetworkTableInstance ntInstance = NetworkTableInstance.getDefault();
     public static Field2d m_simField = new Field2d();
     private Swerve s_swerve = new Swerve();
-    private Joystick joystick = new Joystick(Constants.Joystick.kPort);
-    JoystickButton btn = new JoystickButton(joystick, 2);
-
-    private SlewRateLimiter joystickRateLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
-    private SlewRateLimiter rotDirectionLimiter = new SlewRateLimiter(Constants.Joystick.kSlewRateLimit);
     private SendableChooser<Command> autoChooser = new SendableChooser<Command>();
-    private SendableChooser<Double> robotSpeedChooser = new SendableChooser<Double>();
 
     public RobotContainer(){
         configureAutoOptions();
         configureBindings();
+
+        SmartDashboard.putData(RobotContainer.m_simField);
+        SmartDashboard.putNumber("test", 0);
+    }
+
+    public void configureAutoOptions(){
+
+    }
+
+    public void configureBindings(){
+        Joystick joystick = new Joystick(Constants.Joystick.kPort);
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
@@ -37,26 +42,6 @@ public class RobotContainer {
                 true
             )
         );
-
-
-
-        SmartDashboard.putData(RobotContainer.m_simField);
-        SmartDashboard.putNumber("test", 0);
-    }
-
-    public void configureAutoOptions(){
-        autoChooser.setDefaultOption("Default Auto", new InstantCommand());
-        autoChooser.addOption("auto1", new InstantCommand());
-        SmartDashboard.putData(autoChooser);
-
-        robotSpeedChooser.setDefaultOption("100%", Double.valueOf(1.0));
-        robotSpeedChooser.addOption("75%", 0.75);
-        robotSpeedChooser.addOption("50%", 0.5);
-        robotSpeedChooser.addOption("25%", 0.25);
-        SmartDashboard.putData(robotSpeedChooser);
-    }
-
-    public void configureBindings(){
     }
 
     public Command getAutoCommand(){
