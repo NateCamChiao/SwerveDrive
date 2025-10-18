@@ -48,9 +48,9 @@ public final class Constants {
         public static final COTSFalconSwerveConstants kSwerveSpecialtyModule = COTSFalconSwerveConstants.SDSMK4i(COTSFalconSwerveConstants.driveGearRatios.SDSMK4i_L1);
         public static final double kWheelCircumference = kSwerveSpecialtyModule.wheelCircumference;
         //distance from center of wheel to center of wheel (long side of car)
-        public static final double kWheelBase = Units.inchesToMeters(24.75);
+        public static final double kWheelBase = Units.inchesToMeters(25.913);
         //distance from middle of tire to middle of other tire (width of car)
-        public static final double kTrackWidth = Units.inchesToMeters(24.75);
+        public static final double kTrackWidth = Units.inchesToMeters(25.913);
         //used to define kinematics (optional)
         public static final double halfWheelBase = kWheelBase / 2;
         public static final double halfTrackWidth = kTrackWidth / 2;
