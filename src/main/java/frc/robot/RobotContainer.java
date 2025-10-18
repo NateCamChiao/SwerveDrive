@@ -76,7 +76,7 @@ public class RobotContainer {
         )));
 
         this.alignToReefLeftBtn.whileTrue(
-            new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, true)
+            new AlignToReef(s_swerve, () -> new Transform2d(0.1,0.1, Rotation2d.fromDegrees(0)), true)
         );
         this.alignToReefLeftBtn.whileTrue(
             new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, false)

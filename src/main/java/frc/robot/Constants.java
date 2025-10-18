@@ -64,28 +64,28 @@ public final class Constants {
             public static final int kDriveID = 1;
             public static final int kTurnID = 2;
             public static final int kEncoderID = 1;
-            public static final double kOffsetAngle = -0.079590;
+            public static final double kOffsetAngle = -0.155273;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class FRModule{
             public static final int kDriveID = 3;
             public static final int kTurnID = 4;
             public static final int kEncoderID = 2;
-            public static final double kOffsetAngle = -0.215576;
+            public static final double kOffsetAngle = 0.126953;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class BLModule{
             public static final int kDriveID = 5;
             public static final int kTurnID = 6;
             public static final int kEncoderID = 3;
-            public static final double kOffsetAngle = 0.256348;
+            public static final double kOffsetAngle = -0.298096;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
         public static final class BRModule{
             public static final int kDriveID = 7;
             public static final int kTurnID = 8;
             public static final int kEncoderID = 4;
-            public static final double kOffsetAngle = -0.462646;
+            public static final double kOffsetAngle = -0.308105;
             public static final SwerveConstants kSwerveConstants = new SwerveConstants(kDriveID, kTurnID, kEncoderID, kOffsetAngle);
         }
 
@@ -140,5 +140,34 @@ public final class Constants {
             public static final NeutralModeValue kDriveNeutralMode = NeutralModeValue.Brake;
         }
     }
+    public static final class PivotConstants {
+        public static final double pivotKP = 0.4; //proportional
+        public static final double pivotKI = 0; //integral
+        public static final double pivotKD = 0; //derivative
+        public static final double PIDerrorTolerance = 0.05;//pid controller tolerance
+        public static final double maxPivotSpeed = 0.2;
+        public static final double maxPivotDownSpeed = maxPivotSpeed*.03;
+        public static final double verticalIntakeAngle = 12;
+
+
+        public static final double intakeAngle1 = 0; //TODO Change all of these
+        public static final double intakeAngle2 = 0;
+        public static final double sourceAngle = 2.07;
+        public static final double L1Angle = 5.4;
+        public static final double L2L3startAngle = 3.7;
+        public static final double L2L3endAngle = 0;
+
+        public static final double L4StartAngle = 0;
+        public static final double L4EndAngle = 0;
+        public static final double algaeAngle = 9.54*48/45;
+        public static final double algaeAngleEnd = 5.05*48/45;
+        public static final double idleAngle = 0;
+        public static final double intakeEndAngle = 2*48/45;
+        public static final double climbAngle = 3;
+
+        public static final double groundIntakeAngle = 14;
+
+    }
+
     
 }

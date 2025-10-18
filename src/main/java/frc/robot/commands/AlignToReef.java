@@ -10,7 +10,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.Swerve;
 
-public class AlignToReef extends Command{
+public class 
+AlignToReef extends Command{
   private Supplier<Transform2d> tagOffsetSupplier;
   private Swerve drivetrain;
   private boolean alignLeft;
@@ -35,10 +36,10 @@ public class AlignToReef extends Command{
     }
     Rotation2d endRotation = this.drivetrain.getYaw().plus(robotToTagOffset.getRotation());
 
-    CommandScheduler.getInstance().schedule(
-      AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation))
-    );
-    AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation));
+    // CommandScheduler.getInstance().schedule(
+    //   AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation))
+    // );
+    AutoBuilder.followPath(this.drivetrain.createPathplannerPath(robotToTagOffset, endRotation)).schedule();
   }
   public boolean isFinished(){
     return true;

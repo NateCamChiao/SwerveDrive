@@ -6,6 +6,7 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
 import com.studica.frc.AHRS;
@@ -35,15 +36,19 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.RobotContainer.ntInstance;
+import com.ctre.phoenix6.hardware.Pigeon2;
 
 import java.util.List;
 import java.util.function.Supplier;
 
 public class Swerve extends SubsystemBase{
+    PathConstraints constraints = new PathConstraints(1.0, 1.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+
     private AHRS m_gryo;
+    private Pigeon2 pigeon;
     private final SwerveModule[] m_swerveModules;
     private final SwerveDriveOdometry m_swerveDriveOdometry;
-    private final LimelightWrapper limelight = new LimelightWrapper("limelight-greg");// TODO Rename this to name of limelight
+    private final LimelightWrapper limelight = new LimelightWrapper("limelight-one");// TODO Rename this to name of limelight
 
     //logging SwerveModuleStates (advantagescope)
     private final StructArrayPublisher<SwerveModuleState> measuredModuleStatePub = ntInstance.getStructArrayTopic("Measured Module States", SwerveModuleState.struct).publish();
@@ -52,6 +57,7 @@ public class Swerve extends SubsystemBase{
     private final StructPublisher<ChassisSpeeds> desiredChassisPub = ntInstance.getStructTopic("Desired Chassis Speeds", ChassisSpeeds.struct).publish();
     public Swerve(){
         this.m_gryo = new AHRS(NavXComType.kMXP_SPI);
+        this.pigeon = new Pigeon2(0);
         //makes sure robot drives field relative
         zeroGyro();
         this.m_swerveModules = new SwerveModule[]{
@@ -96,8 +102,8 @@ public class Swerve extends SubsystemBase{
         );        
         SmartDashboard.putNumber("gyro", getYaw().getDegrees());
         Transform2d limelightTransform = limelight.getNearestTagWith3DOffset();
-        SmartDashboard.putNumber("Limelight x", limelightTransform.getX());
-        SmartDashboard.putNumber("Limelight y", limelightTransform.getY());
+        SmartDashboard.putNumber("Limelight z", limelightTransform.getX());
+        SmartDashboard.putNumber("Limelight strafe", limelightTransform.getY());
         SmartDashboard.putNumber("Limelight angle", limelightTransform.getRotation().getDegrees());
     }
 
@@ -138,14 +144,14 @@ public class Swerve extends SubsystemBase{
     //gyro
 
     public void zeroGyro(){
-        this.m_gryo.zeroYaw();
+        this.pigeon.reset();
     }
 
     public Rotation2d getYaw(){
         SmartDashboard.putNumber("gyro offset", 
-            Rotation2d.fromDegrees(-m_gryo.getYaw()).plus(Rotation2d.kCCW_90deg).getDegrees()
+            Rotation2d.fromDegrees(pigeon.getRotation2d().getDegrees()).plus(Rotation2d.kCCW_90deg).getDegrees()
         );
-        return Rotation2d.fromDegrees(-m_gryo.getYaw()).plus(Rotation2d.kCCW_90deg);
+        return Rotation2d.fromDegrees(pigeon.getRotation2d().getDegrees()).plus(Rotation2d.kCCW_90deg);
     }
     //sweve modules
     public void alignModules(){
@@ -220,9 +226,14 @@ public class Swerve extends SubsystemBase{
             this.getPose(),
             this.getPose().plus(relativeTransform)
         );
+        SmartDashboard.putNumber("Pathplanner X", this.getPose().getX());
+        SmartDashboard.putNumber("Pathplanner Y", this.getPose().getY());
+        SmartDashboard.putNumber("Pathplanner new X", this.getPose().plus(relativeTransform).getX());
+        SmartDashboard.putNumber("Pathplanner new Y", this.getPose().plus(relativeTransform).getY());
+
         return new PathPlannerPath(
             pathWaypoints,
-            null, 
+            this.constraints, 
             null, 
             new GoalEndState(0, endRotation));
     }
