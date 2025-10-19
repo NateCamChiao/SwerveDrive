@@ -24,6 +24,8 @@ public class LimelightWrapper {
 
     public Transform2d getNearestTagWith3DOffset(){
         double[] offsetData = LimelightHelpers.getTargetPose_CameraSpace(limelightName);
+        if(offsetData.length > 0){
+
             double xOffset = offsetData[2];
             double yOffset = offsetData[0];
             double rotationOffset = offsetData[4];
@@ -32,6 +34,8 @@ public class LimelightWrapper {
                 yOffset,
                 Rotation2d.fromDegrees(rotationOffset).minus(Rotation2d.kCCW_90deg)
             );
+        }
+        return Transform2d.kZero;
     }
 
     public Transform2d getTransformToBranch(boolean isLeft){
