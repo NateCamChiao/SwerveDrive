@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.AlignToReef;
 import frc.robot.commands.DriveCommand;
@@ -27,6 +28,7 @@ public class RobotContainer {
     public static Field2d m_simField = new Field2d();
     private Swerve s_swerve = new Swerve();
     private Joystick joystick = new Joystick(Constants.Joystick.kPort);
+    private CommandXboxController xbox = new CommandXboxController(0);
     JoystickButton btn = new JoystickButton(joystick, 2);
     JoystickButton driveForwardBtn = new JoystickButton(joystick, 3);
     JoystickButton alignToReefLeftBtn = new JoystickButton(joystick, 5);
@@ -44,9 +46,9 @@ public class RobotContainer {
         s_swerve.setDefaultCommand(
             new DriveCommand(
                 s_swerve, 
-                () -> joystick.getRawAxis(Constants.Joystick.kXAxis), 
-                () -> -joystick.getRawAxis(Constants.Joystick.kYAxis),
-                () -> -joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
+                () -> xbox.getLeftX(),//joystick.getRawAxis(Constants.Joystick.kXAxis), 
+                () -> -xbox.getLeftY(),//-joystick.getRawAxis(Constants.Joystick.kYAxis),
+                () -> -xbox.getRightX(),//-joystick.getRawAxis(Constants.Joystick.kRotationAxis)*1.4, 
                 true
             )
         );
@@ -74,10 +76,10 @@ public class RobotContainer {
             Rotation2d.fromDegrees(0)
         )));
 
-        this.alignToReefLeftBtn.whileTrue(
+        this.xbox.leftBumper().whileTrue(
             new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, true)
         );
-        this.alignToReefRightBtn.whileTrue(
+        this.xbox.rightBumper().whileTrue(
             new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, false)
         );
     }
