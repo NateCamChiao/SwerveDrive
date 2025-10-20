@@ -6,6 +6,7 @@ import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.IdealStartingState;
 import com.pathplanner.lib.path.PathConstraints;
 import com.pathplanner.lib.path.PathPlannerPath;
 import com.pathplanner.lib.path.Waypoint;
@@ -75,6 +76,7 @@ public class Swerve extends SubsystemBase{
             this.getYaw(),
             getModulePositions()
         );
+        resetPose(new Pose2d(5,5, Rotation2d.kZero));
 
         configureAutoBuilder();
     }
@@ -86,14 +88,14 @@ public class Swerve extends SubsystemBase{
 
         SwerveModuleState[] swerveModuleStates = new SwerveModuleState[4];
         for(int i = 0; i < 4; i++){
-            SmartDashboard.putNumber("mod" + i, m_swerveModules[i].m_driveMotor.getMotorVoltage().getValueAsDouble());
+            // SmartDashboard.putNumber("mod" + i, m_swerveModules[i].m_driveMotor.getMotorVoltage().getValueAsDouble());
             swerveModuleStates[i] = m_swerveModules[i].getSwerveModuleState();
 
-            SmartDashboard.putNumber("Mod " + i, m_swerveModules[i].m_angleMotor.getPosition().getValueAsDouble());
-            SmartDashboard.putNumber("Mod encoder" + i, m_swerveModules[i].m_encoder.getPosition().getValueAsDouble());
+            // SmartDashboard.putNumber("Mod " + i, m_swerveModules[i].m_angleMotor.getPosition().getValueAsDouble());
+            // SmartDashboard.putNumber("Mod encoder" + i, m_swerveModules[i].m_encoder.getPosition().getValueAsDouble());
         }
-        if(this.getDefaultCommand() != null)
-            SmartDashboard.putString("Command name ", this.getDefaultCommand().getName());
+        // if(this.getDefaultCommand() != null)
+        //     SmartDashboard.putString("Command name ", this.getDefaultCommand().getName());
         
         //updating publishers
         this.measuredModuleStatePub.set(swerveModuleStates);
@@ -221,7 +223,11 @@ public class Swerve extends SubsystemBase{
         
     }
 
-    public PathPlannerPath createPathplannerPath(Transform2d relativeTransform, Rotation2d endRotation){
+    public void stop(){
+        this.drive(Translation2d.kZero, 0, false);
+    }
+
+    public PathPlannerPath  createPathplannerPath(Transform2d relativeTransform, Rotation2d endRotation){
         List<Waypoint> pathWaypoints = PathPlannerPath.waypointsFromPoses(
             this.getPose(),
             this.getPose().plus(relativeTransform)
@@ -230,16 +236,20 @@ public class Swerve extends SubsystemBase{
         SmartDashboard.putNumber("Pathplanner Y", this.getPose().getY());
         SmartDashboard.putNumber("Pathplanner new X", this.getPose().plus(relativeTransform).getX());
         SmartDashboard.putNumber("Pathplanner new Y", this.getPose().plus(relativeTransform).getY());
-
-        return new PathPlannerPath(
+        PathPlannerPath generatedPath = new PathPlannerPath(
             pathWaypoints,
             this.constraints, 
-            null, 
-            new GoalEndState(0, endRotation));
+            new IdealStartingState(0, this.getYaw()), 
+            new GoalEndState(0.0, endRotation));
+        generatedPath.preventFlipping = true;
+        return generatedPath;
     }
 
     public Transform2d tagAlignmentSupplier(){
+        SmartDashboard.putNumber("limelight offset x", limelight.getNearestTagWith3DOffset().getX());
+        SmartDashboard.putNumber("limelight offset z", limelight.getNearestTagWith3DOffset().getY());
         return limelight.getNearestTagWith3DOffset();
+        
     }
 
     

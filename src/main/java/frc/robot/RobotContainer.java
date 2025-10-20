@@ -54,19 +54,18 @@ public class RobotContainer {
 
 
         SmartDashboard.putData(RobotContainer.m_simField);
-        SmartDashboard.putNumber("test", 0);
     }
 
     public void configureAutoOptions(){
         autoChooser.setDefaultOption("Default Auto", new InstantCommand());
         autoChooser.addOption("auto1", new InstantCommand());
-        SmartDashboard.putData(autoChooser);
+        // SmartDashboard.putData(autoChooser);
 
         robotSpeedChooser.setDefaultOption("100%", Double.valueOf(1.0));
         robotSpeedChooser.addOption("75%", 0.75);
         robotSpeedChooser.addOption("50%", 0.5);
         robotSpeedChooser.addOption("25%", 0.25);
-        SmartDashboard.putData(robotSpeedChooser);
+        // SmartDashboard.putData(robotSpeedChooser);
     }
 
     public void configureBindings(){
@@ -76,9 +75,9 @@ public class RobotContainer {
         )));
 
         this.alignToReefLeftBtn.whileTrue(
-            new AlignToReef(s_swerve, () -> new Transform2d(0.1,0.1, Rotation2d.fromDegrees(0)), true)
+            new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, true)
         );
-        this.alignToReefLeftBtn.whileTrue(
+        this.alignToReefRightBtn.whileTrue(
             new AlignToReef(s_swerve, s_swerve::tagAlignmentSupplier, false)
         );
     }
